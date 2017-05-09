@@ -44,13 +44,14 @@ class GameViewController: UIViewController {
         case leftButton:
             print("Left")
             runFunc = #selector(GameViewController.moveLeft)
+            moveLeft()
             break
         default:
             print("Unknown Button, will crash.")
             break
         }
         timer.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: timeBetweenMoves, target: self, selector: runFunc, userInfo: nil, repeats: true)
+        //timer = Timer.scheduledTimer(timeInterval: timeBetweenMoves, target: self, selector: runFunc, userInfo: nil, repeats: true)
     }
     
     @IBAction func fireButtonDown(sender: UIButton) {
@@ -60,11 +61,13 @@ class GameViewController: UIViewController {
     
     @IBAction func buttonUp(sender: UIButton) {
         timer.invalidate()
+        stop()
     }
     
     @IBAction func fireButtonUp(sender: UIButton) {
         fireTimer.invalidate()
     }
+    
     func moveUp() {
         gameScene.moveUp()
     }
@@ -81,6 +84,9 @@ class GameViewController: UIViewController {
         gameScene.moveRight()
     }
     
+    func stop() {
+        gameScene.stop()
+    }
     func fire() {
         gameScene.fire()
     }

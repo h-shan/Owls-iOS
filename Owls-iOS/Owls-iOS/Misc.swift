@@ -9,5 +9,11 @@
 import Foundation
 import SpriteKit
 
+var screenWidth: CGFloat!
+var screenHeight: CGFloat!
 var scalerX:CGFloat!
 var scalerY:CGFloat!
+
+enum Orientation {
+    case VERTICAL, HORIZONTAL
+}

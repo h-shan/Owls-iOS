@@ -13,7 +13,10 @@ import UIKit
 class TitleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        scalerX = self.view.frame.width/1000
-        scalerY = self.view.frame.height/1800
+        screenWidth = self.view.frame.maxX
+        screenHeight = self.view.frame.maxY
+        
+        scalerX = screenWidth/1000
+        scalerY = screenHeight/1800
     }
 }
