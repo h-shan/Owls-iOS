@@ -36,11 +36,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 contact.bodyB.velocity.dy = 0
             }
         }
+        if let wall = contact.bodyB.node as? Wall {
+            if wall.orientation == Orientation.VERTICAL {
+                contact.bodyA.velocity.dx = 0
+            } else {
+                contact.bodyB.velocity.dy = 0
+            }
+        }
+        if contact.bodyA.node is Bullet {
+            contact.bodyA.node?.removeFromParent()
+            if let player = contact.bodyB.node as? Player {
+                player.lives -= 1
+                print(player.lives)
+                if player.lives <= 0 {
+                    player.removeFromParent()
+                }
+            }
+        }
+        if contact.bodyB.node is Bullet {
+            contact.bodyB.node?.removeFromParent()
+            if let player = contact.bodyA.node as? Player {
+                player.lives -= 1
+                print(player.lives)
+                if player.lives <= 0 {
+                    player.removeFromParent()
+                }
+            }
+        }
+        
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
         if contact.bodyA.node is Wall {
-            print("hey1")
             if let player = contact.bodyB.node as? Player {
                 if player.dir == Direction.RIGHT && player.body.velocity.dx < 0{
                     player.body.velocity.dx = 0
@@ -58,7 +85,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         if contact.bodyB.node is Wall  {
-            print("hey2")
             if let player = contact.bodyA.node as? Player {
                 if player.dir == Direction.RIGHT && player.body.velocity.dx < 0{
                     player.body.velocity.dx = 0
@@ -145,11 +171,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func stop() {
-        owl.dir = Direction.NONE
+        //owl.dir = Direction.NONE
         owl.body.velocity = CGVector(dx: 0, dy: 0)
     }
     func fire() {
         print("Fire!")
+        owl.shoot()
     }
     
     func validPosition(x: CGFloat, y:CGFloat, size: CGSize) -> Bool {
@@ -224,5 +251,5 @@ class GameView: UIView {
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         return frame.contains(point)
     }
-
 }
+
