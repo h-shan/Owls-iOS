@@ -17,33 +17,33 @@ class GameViewController: UIViewController {
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var fireButton: UIButton!
     @IBOutlet weak var controlView: UIView!
-    var gameScene = GameScene(size: CGSize(width: scalerX * 1000, height: scalerY * 1800))
-    
+    @IBOutlet weak var pauseView: UIView!
+    @IBOutlet weak var dimmer: UIView!
+    @IBOutlet weak var skView: SKView!
+    var gameScene = GameScene(size: CGSize(width: scalerX * 1000, height: scalerY * 1260))
+    var parentVC: PlayViewController!
+    var holdingMove = false
     let timeBetweenMoves = 0.05
     var timer = Timer()
     var fireTimer: Timer!
     
     @IBAction func buttonDown(sender: UIButton) {
-        var runFunc: Selector!
+        holdingMove = true
         switch sender {
         case upButton:
             print("Up")
-            runFunc = #selector(GameViewController.moveUp)
             moveUp()
             break
         case downButton:
             print("Down")
-            runFunc = #selector(GameViewController.moveDown)
             moveDown()
             break
         case rightButton:
             print("Right")
-            runFunc = #selector(GameViewController.moveRight)
             moveRight()
             break
         case leftButton:
             print("Left")
-            runFunc = #selector(GameViewController.moveLeft)
             moveLeft()
             break
         default:
@@ -60,6 +60,7 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func buttonUp(sender: UIButton) {
+        holdingMove = false
         timer.invalidate()
         stop()
     }
@@ -68,6 +69,22 @@ class GameViewController: UIViewController {
         fireTimer.invalidate()
     }
     
+    @IBAction func pauseClicked(sender: AnyObject) {
+        gameScene.physicsWorld.speed = 0
+        gameScene.isPaused = true
+        pauseView.isHidden = false
+        UIView.animate(withDuration: 0.2,animations:{
+            self.dimmer?.alpha = 0.5
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "pause" {
+            let pauseVC = segue.destination as! PauseViewController
+            pauseVC.parentVC = self
+            pauseVC.scene = self.gameScene
+        }
+    }
     func moveUp() {
         gameScene.moveUp()
     }
@@ -93,11 +110,9 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let skView = self.view as! SKView
         skView.presentScene(gameScene)
         skView.showsFPS = true
         skView.showsNodeCount = true
-        
         //controlView.arrows = [upButton, rightButton, downButton, leftButton]
     }
 
@@ -124,5 +139,9 @@ class GameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        pauseView.isHidden = true
+        UIView.animate(withDuration: 0.2,animations:{
+            self.dimmer?.alpha = 0
+        })
     }
 }

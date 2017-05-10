@@ -20,18 +20,27 @@ class Player: SKSpriteNode {
     var gameScene: GameScene!
     var body: SKPhysicsBody!
     var shootVelocity: CGFloat = 300
-    var lives = 10
+    var lives = 5
+    let velocity = 200
+    let startLives = 5
+    var ownPlayer: Bool!
     
-    init(scene: GameScene) {
+    init(scene: GameScene, ownPlayer: Bool) {
         let texture = SKTexture(imageNamed: "Owl")
-        super.init(texture: texture, color: UIColor.clear, size: CGSize(width: scalerX * 60, height: scalerY * 60))
+        super.init(texture: texture, color: UIColor.clear, size: CGSize(width: scalerX * 60, height: scalerX * 60))
+        print(self.size)
         gameScene = scene
+        self.ownPlayer = ownPlayer
         self.zPosition = 3
         self.moveConstant = CGFloat(1000)/CGFloat(gameScene.width)
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.friction = 0
         physicsBody?.linearDamping = 0
         body = self.physicsBody!
+        body.allowsRotation = false
+        body.collisionBitMask = 1
+        body.categoryBitMask = 1
+        body.contactTestBitMask = 1
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,11 +52,69 @@ class Player: SKSpriteNode {
         if gameScene.validPosition(x: x, y: y, size: size) {
             currentX = x
             currentY = y
-            position.x = CGFloat(x) * moveConstant * scalerX
-            position.y = CGFloat(y) * moveConstant * scalerY
+            position.x = x * moveConstant * scalerX
+            position.y = y * moveConstant * scalerY
         }
     }
+    
+    func setVelocity(dx: CGFloat, dy: CGFloat) {
+        self.body.velocity = CGVector(dx: dx * scalerX, dy: dy * scalerY)
+    }
+    
+    func reset() {
+        lives = startLives
+    }
+    
+    func moveUp() {
+        self.dir = Direction.UP
+        self.body.velocity = CGVector(dx: 0, dy: velocity)
+        self.zRotation = 0
+        if ownPlayer {
+            sendMove()
+        }
+    }
+    
+    func moveDown() {
+        self.dir = Direction.DOWN
+        self.body.velocity = CGVector(dx: 0, dy: -velocity)
+        self.zRotation = CGFloat(Double.pi)
+        if ownPlayer {
+            sendMove()
+        }
+    }
+    
+    func moveLeft() {
+        self.dir = Direction.LEFT
+        self.body.velocity = CGVector(dx: -velocity, dy:  0)
+        self.zRotation = CGFloat(Double.pi/2.0)
+        if ownPlayer {
+            sendMove()
+        }
+    }
+    
+    func moveRight() {
+        self.dir = Direction.RIGHT
+        self.body.velocity = CGVector(dx: velocity, dy: 0)
+        self.zRotation = CGFloat(Double.pi*3.0/2.0)
+        if ownPlayer {
+            sendMove()
+        }
+    }
+    
+    func stop() {
+        //self.dir = Direction.NONE
+        self.body.velocity = CGVector(dx: 0, dy: 0)
+        if ownPlayer {
+            sendMove()
+        }
+    }
+    func sendMove() {
+        SocketIOManager.sharedInstance.sendMove(gameScene.opponent, position: CGPoint(x: self.position.x / scalerX, y: self.position.y / scalerY), velocity: CGVector(dx: self.body.velocity.dx / scalerX, dy: self.body.velocity.dy / scalerY))
+    }
     func shoot() {
+        if ownPlayer {
+           SocketIOManager.sharedInstance.sendShoot(gameScene.opponent)
+        }
         let horizBuffer = 10 * scalerX
         let vertiBuffer = 10 * scalerY
         let bullet = Bullet()
@@ -78,6 +145,7 @@ class Player: SKSpriteNode {
             break
         }
         gameScene.addChild(bullet)
+        
     }
 }
 
@@ -89,9 +157,9 @@ class Bullet: SKSpriteNode {
         super.init(texture: texture, color: UIColor.clear, size: bulletSize)
         self.physicsBody = SKPhysicsBody(circleOfRadius: bulletSize.width/2)
         body = self.physicsBody!
-        body.collisionBitMask = 1
+        body.collisionBitMask = 0
         body.contactTestBitMask = 1
-        body.categoryBitMask = 1
+        body.categoryBitMask = 0
         self.zPosition = 3
     }
     

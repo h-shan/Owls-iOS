@@ -14,8 +14,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var grid = [[Bool]]()
     var owl: Player!
+    var owl2: Player!
+    var deadOwls = [Player]()
     var width:CGFloat = 1000
-    var height:CGFloat = 1800
+    var height:CGFloat = 1260
     var walls = [CGRect]()
     var topWall: SKSpriteNode!
     var rightWall: SKSpriteNode!
@@ -24,10 +26,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var maxX: CGFloat!
     var maxY: CGFloat!
     let velocity:CGFloat = 200
-
+    var gameVC: GameViewController!
+    var opponent: String!
+    
     override func provideImageData(_ data: UnsafeMutableRawPointer, bytesPerRow rowbytes: Int, origin x: Int, _ y: Int, size width: Int, _ height: Int, userInfo info: Any?) {
-        
     }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         if let wall = contact.bodyA.node as? Wall {
             if wall.orientation == Orientation.VERTICAL {
@@ -50,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print(player.lives)
                 if player.lives <= 0 {
                     player.removeFromParent()
+                    deadOwls.append(player)
                 }
             }
         }
@@ -60,6 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print(player.lives)
                 if player.lives <= 0 {
                     player.removeFromParent()
+                    deadOwls.append(player)
                 }
             }
         }
@@ -67,6 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
+        
         if contact.bodyA.node is Wall {
             if let player = contact.bodyB.node as? Player {
                 if player.dir == Direction.RIGHT && player.body.velocity.dx < 0{
@@ -111,8 +118,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(background)
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.physicsWorld.contactDelegate = self
-
-        // set up grid
+        owl = Player(scene: self, ownPlayer: true)
+        owl2 = Player(scene: self, ownPlayer: false)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -120,59 +127,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        owl = Player(scene: self)
-        self.addChild(owl)
-        
-        owl.setPosition(x: 500, y: 900)
-        let owl2 = Player(scene: self)
-        self.addChild(owl2)
-        owl2.setPosition(x: 700, y: 1200)
-        print(owl.position)
+        restart()
+        addChild(owl)
+        addChild(owl2)
+        print(self.position)
         self.maxX = self.view!.frame.maxX
         self.maxY = self.view!.frame.maxY
-        leftWall = makeWall(startX: 0, startY: height*0.3, endX: 20, endY: height)
-        rightWall = makeWall(startX: width-20, startY: height*0.3, endX: width, endY: height)
+        leftWall = makeWall(startX: 0, startY: 0, endX: 20, endY: height)
+        rightWall = makeWall(startX: width-20, startY: 0, endX: width, endY: height)
         topWall = makeWall(startX: 20, startY: height, endX: width-20, endY: height - 20)
-        bottomWall = makeWall(startX: 20, startY: height*0.3, endX: width-20, endY: height*0.3+20)
-        let temp = makeWall(startX: width/2-10, startY: height*0.8, endX: width/2 + 10, endY: height*0.5)
-        temp.name = "hello"
-        for node in children{
-            if let body = node.physicsBody{
-                body.collisionBitMask = 1
-                body.contactTestBitMask = 1
-                body.categoryBitMask = 1
-            }
-            
-        }
+        bottomWall = makeWall(startX: 20, startY: 0, endX: width-20, endY: 20)
+        _ = makeWall(startX: width*0.2, startY: height*0.5-10, endX: width*0.8, endY: height*0.5+10)
+        _ = makeWall(startX: width*0.2, startY: height*0.2-10, endX: width*0.8, endY: height*0.2+10)
+        _ = makeWall(startX: width*0.2, startY: height*0.8-10, endX: width*0.8, endY: height*0.8+10)
     }
     
     func moveUp() {
-        //owl.moveUp()
-        owl.dir = Direction.UP
-        owl.body.velocity = CGVector(dx: 0, dy: velocity)
+        owl.moveUp()
     }
     
     func moveDown() {
-        //owl.moveDown()
-        owl.dir = Direction.DOWN
-        owl.body.velocity = CGVector(dx: 0, dy: -velocity)
+        owl.moveDown()
     }
     
     func moveLeft() {
-        //owl.moveLeft()
-        owl.dir = Direction.LEFT
-        owl.body.velocity = CGVector(dx: -velocity, dy:  0)
+        owl.moveLeft()
     }
     
     func moveRight() {
-        //owl.moveRight()
-        owl.dir = Direction.RIGHT
-        owl.body.velocity = CGVector(dx: velocity, dy: 0)
+        owl.moveRight()
     }
     
     func stop() {
-        //owl.dir = Direction.NONE
-        owl.body.velocity = CGVector(dx: 0, dy: 0)
+        owl.stop()
     }
     func fire() {
         print("Fire!")
@@ -212,12 +199,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         wall.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
         wall.physicsBody?.isDynamic = false
         wall.physicsBody!.friction = 0
+        wall.physicsBody!.collisionBitMask = 1
+        wall.physicsBody!.contactTestBitMask = 1
+        wall.physicsBody!.categoryBitMask = 1
         if finishY - beginY > finishX - beginX {
             wall.orientation = Orientation.VERTICAL
         } else {
             wall.orientation = Orientation.HORIZONTAL
         }
         addChild(wall)
+        
         return wall
         
     }
@@ -225,11 +216,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    
+    func restart() {
+        owl.setPosition(x: 500, y: 200)
+        owl2.setPosition(x: 500, y: 1060)
+        owl.reset()
+        owl2.reset()
+        for dead in deadOwls {
+            addChild(dead)
+        }
+        deadOwls.removeAll()
+    }
 }
 
 class Wall: SKSpriteNode {
     var orientation: Orientation!
+    override init(texture: SKTexture?, color: UIColor, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
+
 class GameView: UIView {
     var arrows: [UIView]!
 
@@ -252,4 +262,3 @@ class GameView: UIView {
         return frame.contains(point)
     }
 }
-

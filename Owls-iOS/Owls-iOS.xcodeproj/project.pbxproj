@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890E3F511EC27BC700765F68 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890E3F501EC27BC700765F68 /* SocketIOManager.swift */; };
+		890E3F531EC2808900765F68 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890E3F521EC2808900765F68 /* PlayViewController.swift */; };
+		890E3F551EC2A62D00765F68 /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890E3F541EC2A62D00765F68 /* PauseViewController.swift */; };
 		89F1C6D91EBBC9250079D459 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1C6D81EBBC9250079D459 /* AppDelegate.swift */; };
 		89F1C6DF1EBBC9250079D459 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1C6DE1EBBC9250079D459 /* GameScene.swift */; };
 		89F1C6E11EBBC9250079D459 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1C6E01EBBC9250079D459 /* GameViewController.swift */; };
@@ -17,9 +20,15 @@
 		89F1C6F31EBBFBCF0079D459 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1C6F21EBBFBCF0079D459 /* Player.swift */; };
 		89F1C6F51EBBFDAE0079D459 /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1C6F41EBBFDAE0079D459 /* TitleViewController.swift */; };
 		89F1C6F71EBBFDF30079D459 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1C6F61EBBFDF30079D459 /* Misc.swift */; };
+		F81DF620BB5166D18A3FC07A /* Pods_Owls_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90D41722EF03C2F09EF8B0E0 /* Pods_Owls_iOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		112D6C723D243E9F6D47BADC /* Pods-Owls-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Owls-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Owls-iOS/Pods-Owls-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		3915A2F8EEDACEA1BA71CFEB /* Pods-Owls-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Owls-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Owls-iOS/Pods-Owls-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		890E3F501EC27BC700765F68 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		890E3F521EC2808900765F68 /* PlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
+		890E3F541EC2A62D00765F68 /* PauseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		89F1C6D51EBBC9250079D459 /* Owls-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Owls-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89F1C6D81EBBC9250079D459 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89F1C6DE1EBBC9250079D459 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -32,6 +41,7 @@
 		89F1C6F21EBBFBCF0079D459 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		89F1C6F41EBBFDAE0079D459 /* TitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
 		89F1C6F61EBBFDF30079D459 /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		90D41722EF03C2F09EF8B0E0 /* Pods_Owls_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Owls_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,17 +49,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F81DF620BB5166D18A3FC07A /* Pods_Owls_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D47CFA07C3D96E5C396C73F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				90D41722EF03C2F09EF8B0E0 /* Pods_Owls_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		89F1C6CC1EBBC9240079D459 = {
 			isa = PBXGroup;
 			children = (
 				89F1C6D71EBBC9250079D459 /* Owls-iOS */,
 				89F1C6D61EBBC9250079D459 /* Products */,
+				9786D730F877F19070CCD3FB /* Pods */,
+				0D47CFA07C3D96E5C396C73F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,8 +96,20 @@
 				89F1C6F21EBBFBCF0079D459 /* Player.swift */,
 				89F1C6F41EBBFDAE0079D459 /* TitleViewController.swift */,
 				89F1C6F61EBBFDF30079D459 /* Misc.swift */,
+				890E3F501EC27BC700765F68 /* SocketIOManager.swift */,
+				890E3F521EC2808900765F68 /* PlayViewController.swift */,
+				890E3F541EC2A62D00765F68 /* PauseViewController.swift */,
 			);
 			path = "Owls-iOS";
+			sourceTree = "<group>";
+		};
+		9786D730F877F19070CCD3FB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3915A2F8EEDACEA1BA71CFEB /* Pods-Owls-iOS.debug.xcconfig */,
+				112D6C723D243E9F6D47BADC /* Pods-Owls-iOS.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +119,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89F1C6ED1EBBC9250079D459 /* Build configuration list for PBXNativeTarget "Owls-iOS" */;
 			buildPhases = (
+				15EF85855957282BFD55BB84 /* [CP] Check Pods Manifest.lock */,
 				89F1C6D11EBBC9250079D459 /* Sources */,
 				89F1C6D21EBBC9250079D459 /* Frameworks */,
 				89F1C6D31EBBC9250079D459 /* Resources */,
+				5F0155C1918786750C42F9CE /* [CP] Embed Pods Frameworks */,
+				76C9533055C718AE663F695D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -147,16 +183,67 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		15EF85855957282BFD55BB84 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5F0155C1918786750C42F9CE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Owls-iOS/Pods-Owls-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76C9533055C718AE663F695D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Owls-iOS/Pods-Owls-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		89F1C6D11EBBC9250079D459 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				89F1C6DF1EBBC9250079D459 /* GameScene.swift in Sources */,
+				890E3F531EC2808900765F68 /* PlayViewController.swift in Sources */,
 				89F1C6E11EBBC9250079D459 /* GameViewController.swift in Sources */,
 				89F1C6D91EBBC9250079D459 /* AppDelegate.swift in Sources */,
 				89F1C6F31EBBFBCF0079D459 /* Player.swift in Sources */,
+				890E3F511EC27BC700765F68 /* SocketIOManager.swift in Sources */,
 				89F1C6F71EBBFDF30079D459 /* Misc.swift in Sources */,
+				890E3F551EC2A62D00765F68 /* PauseViewController.swift in Sources */,
 				89F1C6F11EBBE55F0079D459 /* Timer.swift in Sources */,
 				89F1C6F51EBBFDAE0079D459 /* TitleViewController.swift in Sources */,
 			);
@@ -279,6 +366,7 @@
 		};
 		89F1C6EE1EBBC9250079D459 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3915A2F8EEDACEA1BA71CFEB /* Pods-Owls-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D2ZMJ8S8D5;
@@ -292,6 +380,7 @@
 		};
 		89F1C6EF1EBBC9250079D459 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 112D6C723D243E9F6D47BADC /* Pods-Owls-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D2ZMJ8S8D5;
@@ -322,6 +411,7 @@
 				89F1C6EF1EBBC9250079D459 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
