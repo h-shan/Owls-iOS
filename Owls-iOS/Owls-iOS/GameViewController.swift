@@ -20,6 +20,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var pauseView: UIView!
     @IBOutlet weak var dimmer: UIView!
     @IBOutlet weak var skView: SKView!
+    @IBOutlet weak var dPadView:DPadView!
     var gameScene = GameScene(size: CGSize(width: scalerX * 1000, height: scalerY * 1260))
     var parentVC: PlayViewController!
     var holdingMove = false

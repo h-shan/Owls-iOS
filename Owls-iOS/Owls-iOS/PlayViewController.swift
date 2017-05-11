@@ -180,19 +180,22 @@ extension PlayViewController {
         SocketIOManager.sharedInstance.socket.on("moveUpdate") { (opp, ack) in
             print("moveUpdate")
             let moveInfo = opp[0] as! [CGFloat]
-            //let time = opp[1] as! Double
-            let px = moveInfo[0]
-            let py = moveInfo[1]
+            
+            let sentTime = opp[1] as! Double
+            let timeElapsed = CGFloat(Date.timeIntervalSinceReferenceDate - sentTime)
+            
             let vx = moveInfo[2]
-            let vy = moveInfo[3]
+            let vy = -moveInfo[3]
+            let px = moveInfo[0] + vx * timeElapsed
+            let py = moveInfo[1] + vy * timeElapsed
             self.scene.owl2.setPosition(x: px, y: 1260-py)
             if vx > 0 {
                 self.scene.owl2.moveRight()
             } else if vx < 0 {
                 self.scene.owl2.moveLeft()
-            } else if vy < 0 { // directions intentionally opposite for y direction
-                self.scene.owl2.moveUp()
             } else if vy > 0 {
+                self.scene.owl2.moveUp()
+            } else if vy < 0 {
                 self.scene.owl2.moveDown()
             } else {
                 self.scene.owl2.stop()
@@ -203,7 +206,12 @@ extension PlayViewController {
         }
         
         SocketIOManager.sharedInstance.socket.on("shootUpdate") { (opp, ack) in
-            self.scene.owl2.shoot()
+            let bulletInfo = opp[0] as! [CGFloat]
+            let sentTime = opp[1] as! Double
+            let timeElapsed = CGFloat(Date.timeIntervalSinceReferenceDate - sentTime)
+            let vel = CGVector(dx: bulletInfo[2], dy: -bulletInfo[3])
+            let pos = CGPoint(x: bulletInfo[0] + vel.dx * timeElapsed, y: 1260 - bulletInfo[1] + vel.dy * timeElapsed)
+            self.scene.owl2.shoot(pos: pos, vel: vel)
         }
     }
 }

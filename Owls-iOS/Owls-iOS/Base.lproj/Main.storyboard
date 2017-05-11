@@ -85,10 +85,10 @@
                             <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1iA-rN-gVf" userLabel="ControlsView">
                                 <rect key="frame" x="16" y="513.5" width="343" height="133.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="csf-yZ-d3V" userLabel="DPadView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="csf-yZ-d3V" userLabel="DPadView" customClass="DPadView" customModule="Owls_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="133.5" height="133.5"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkl-2f-3AD" userLabel="DownView">
+                                            <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkl-2f-3AD" userLabel="DownView">
                                                 <rect key="frame" x="46" y="67" width="40.5" height="66.5"/>
                                                 <subviews>
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhM-Ke-iAc">
@@ -110,7 +110,7 @@
                                                     <constraint firstItem="rhM-Ke-iAc" firstAttribute="trailing" secondItem="jkl-2f-3AD" secondAttribute="trailing" id="cnC-fz-6Hk"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyJ-Gs-0hm" userLabel="UpView">
+                                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyJ-Gs-0hm" userLabel="UpView">
                                                 <rect key="frame" x="46" y="0.5" width="40.5" height="66.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kw-CB-Kas">
@@ -184,9 +184,12 @@
                                             <action selector="pauseClickedWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="mZi-Vh-n4b"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kye-cl-rwc">
-                                        <rect key="frame" x="273" y="11.5" width="30" height="30"/>
-                                        <state key="normal" title="Fire"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kye-cl-rwc">
+                                        <rect key="frame" x="266.5" y="13" width="66.5" height="66.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="kye-cl-rwc" secondAttribute="height" multiplier="1:1" id="BHG-ch-fME"/>
+                                        </constraints>
+                                        <state key="normal" image="Fire"/>
                                         <connections>
                                             <action selector="fireButtonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDown" id="ND8-0U-SOg"/>
                                             <action selector="fireButtonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="x1V-Eq-LFp"/>
@@ -197,16 +200,18 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="ZkJ-Sd-4lK" firstAttribute="centerY" secondItem="1iA-rN-gVf" secondAttribute="bottom" multiplier="0.8" id="3Au-cb-Rss"/>
-                                    <constraint firstItem="kye-cl-rwc" firstAttribute="centerY" secondItem="1iA-rN-gVf" secondAttribute="bottom" multiplier="0.2" id="6Ix-Wl-3vg"/>
-                                    <constraint firstAttribute="trailing" secondItem="ZkJ-Sd-4lK" secondAttribute="trailing" constant="24" id="dE0-Mx-Cfv"/>
+                                    <constraint firstItem="kye-cl-rwc" firstAttribute="top" secondItem="1iA-rN-gVf" secondAttribute="bottom" multiplier="0.1" symbolic="YES" id="6Ix-Wl-3vg"/>
+                                    <constraint firstItem="kye-cl-rwc" firstAttribute="height" secondItem="1iA-rN-gVf" secondAttribute="height" multiplier="0.5" id="SoN-mw-s1c"/>
+                                    <constraint firstItem="ZkJ-Sd-4lK" firstAttribute="trailing" secondItem="1iA-rN-gVf" secondAttribute="trailing" constant="-24" id="dE0-Mx-Cfv"/>
                                     <constraint firstItem="csf-yZ-d3V" firstAttribute="leading" secondItem="1iA-rN-gVf" secondAttribute="leading" id="iU4-dh-l2P"/>
                                     <constraint firstItem="csf-yZ-d3V" firstAttribute="height" secondItem="1iA-rN-gVf" secondAttribute="height" id="mTc-VP-Kkb"/>
                                     <constraint firstItem="csf-yZ-d3V" firstAttribute="bottom" secondItem="1iA-rN-gVf" secondAttribute="bottom" id="ucy-be-1MO"/>
-                                    <constraint firstItem="kye-cl-rwc" firstAttribute="trailing" secondItem="1iA-rN-gVf" secondAttribute="trailing" constant="-40" id="woY-Fj-RCS"/>
+                                    <constraint firstItem="kye-cl-rwc" firstAttribute="trailing" secondItem="1iA-rN-gVf" secondAttribute="trailing" constant="-10" id="woY-Fj-RCS"/>
                                 </constraints>
                             </view>
-                            <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J3i-bY-qed">
+                            <containerView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J3i-bY-qed">
                                 <rect key="frame" x="37" y="253" width="300" height="160"/>
+                                <color key="backgroundColor" red="0.57786722715736039" green="0.57786722715736039" blue="0.57786722715736039" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="J3i-bY-qed" secondAttribute="height" multiplier="15:8" id="GgO-nN-kbI"/>
                                 </constraints>
@@ -266,7 +271,7 @@
                                         <rect key="frame" x="0.0" y="28" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t12-qf-lRX" id="3yq-Fe-EGR">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -448,6 +453,7 @@
         <image name="ArrowRight" width="100" height="100"/>
         <image name="ArrowUp" width="100" height="100"/>
         <image name="BackArrow" width="150" height="94"/>
+        <image name="Fire" width="500" height="500"/>
         <image name="Pause" width="50" height="50"/>
     </resources>
 </document>

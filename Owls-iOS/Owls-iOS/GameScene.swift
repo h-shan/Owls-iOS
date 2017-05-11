@@ -166,35 +166,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         owl.shoot()
     }
     
-    func validPosition(x: CGFloat, y:CGFloat, size: CGSize) -> Bool {
-        if x < 0 || x >= width || y < 0 || y >= height {
-            return false
-        }
-        let fx = CGFloat(x)
-        let fy = CGFloat(y)
-        let fh = size.height/owl.moveConstant
-        let fw = size.width/owl.moveConstant
-        let testPoints = [(fx - fw/2, fy - fh/2), (fx + fw/2, fy + fh/2), (fx, fy + fh/2), (fx + fw/2, fy)]
-        for rect in walls {
-            for pt in testPoints {
-                if pt.0 >= rect.minX && pt.0 <= rect.maxX && pt.1 >= rect.minY && pt.1 <= rect.maxY {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-    
     func makeWall(startX: CGFloat, startY: CGFloat, endX: CGFloat, endY: CGFloat) -> SKSpriteNode {
         let beginY = min(startY, endY)
         let finishY = max(startY, endY)
         let beginX = min(startX, endX)
         let finishX = max(startX, endX)
         // start and end scaled!
-        let wallSize = CGSize(width: scalerX * owl.moveConstant * CGFloat(endX - startX + 1), height: scalerY * owl.moveConstant * CGFloat(finishY - beginY + 1))
+        let wallSize = CGSize(width: scalerX * CGFloat(endX - startX + 1), height: scalerY * CGFloat(finishY - beginY + 1))
         let texture = SKTexture(image: UIImage(named: "Wall")!)
         let wall = Wall(texture: texture, color: .clear, size: wallSize)
-        wall.position = CGPoint(x: scalerX * owl.moveConstant * (beginX + finishX)/2, y: scalerY * owl.moveConstant * (beginY + finishY)/2)
+        wall.position = CGPoint(x: scalerX * (beginX + finishX)/2, y: scalerY * (beginY + finishY)/2)
         wall.zPosition = 3
         wall.physicsBody = SKPhysicsBody(rectangleOf: wallSize)
         wall.physicsBody?.isDynamic = false
@@ -240,7 +221,7 @@ class Wall: SKSpriteNode {
     }
 }
 
-class GameView: UIView {
+class DPadView: UIView {
     var arrows: [UIView]!
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

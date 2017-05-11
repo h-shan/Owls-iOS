@@ -13,7 +13,6 @@ enum Direction {
     case UP, RIGHT, DOWN, LEFT, NONE;
 }
 class Player: SKSpriteNode {
-    var moveConstant:CGFloat = 20
     var currentX:CGFloat = 50
     var currentY:CGFloat = 90
     var dir: Direction = .NONE
@@ -21,7 +20,7 @@ class Player: SKSpriteNode {
     var body: SKPhysicsBody!
     var shootVelocity: CGFloat = 300
     var lives = 5
-    let velocity = 200
+    let velocity:CGFloat = 200
     let startLives = 5
     var ownPlayer: Bool!
     
@@ -32,7 +31,6 @@ class Player: SKSpriteNode {
         gameScene = scene
         self.ownPlayer = ownPlayer
         self.zPosition = 3
-        self.moveConstant = CGFloat(1000)/CGFloat(gameScene.width)
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.friction = 0
         physicsBody?.linearDamping = 0
@@ -47,27 +45,13 @@ class Player: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func setPosition(x: CGFloat, y: CGFloat) {
-        if gameScene.validPosition(x: x, y: y, size: size) {
-            currentX = x
-            currentY = y
-            position.x = x * moveConstant * scalerX
-            position.y = y * moveConstant * scalerY
-        }
-    }
-    
-    func setVelocity(dx: CGFloat, dy: CGFloat) {
-        self.body.velocity = CGVector(dx: dx * scalerX, dy: dy * scalerY)
-    }
-    
     func reset() {
         lives = startLives
     }
     
     func moveUp() {
         self.dir = Direction.UP
-        self.body.velocity = CGVector(dx: 0, dy: velocity)
+        self.setVelocity(dx: 0, dy: velocity)
         self.zRotation = 0
         if ownPlayer {
             sendMove()
@@ -76,7 +60,7 @@ class Player: SKSpriteNode {
     
     func moveDown() {
         self.dir = Direction.DOWN
-        self.body.velocity = CGVector(dx: 0, dy: -velocity)
+        self.setVelocity(dx: 0, dy: -velocity)
         self.zRotation = CGFloat(Double.pi)
         if ownPlayer {
             sendMove()
@@ -85,7 +69,7 @@ class Player: SKSpriteNode {
     
     func moveLeft() {
         self.dir = Direction.LEFT
-        self.body.velocity = CGVector(dx: -velocity, dy:  0)
+        self.setVelocity(dx: -velocity, dy: 0)
         self.zRotation = CGFloat(Double.pi/2.0)
         if ownPlayer {
             sendMove()
@@ -94,7 +78,7 @@ class Player: SKSpriteNode {
     
     func moveRight() {
         self.dir = Direction.RIGHT
-        self.body.velocity = CGVector(dx: velocity, dy: 0)
+        self.setVelocity(dx: velocity, dy: 0)
         self.zRotation = CGFloat(Double.pi*3.0/2.0)
         if ownPlayer {
             sendMove()
@@ -112,12 +96,10 @@ class Player: SKSpriteNode {
         SocketIOManager.sharedInstance.sendMove(gameScene.opponent, position: CGPoint(x: self.position.x / scalerX, y: self.position.y / scalerY), velocity: CGVector(dx: self.body.velocity.dx / scalerX, dy: self.body.velocity.dy / scalerY))
     }
     func shoot() {
-        if ownPlayer {
-           SocketIOManager.sharedInstance.sendShoot(gameScene.opponent)
-        }
+        
+        let bullet = Bullet()
         let horizBuffer = 10 * scalerX
         let vertiBuffer = 10 * scalerY
-        let bullet = Bullet()
         
         switch dir {
         case .UP:
@@ -144,8 +126,18 @@ class Player: SKSpriteNode {
             print("No shoot direction")
             break
         }
+        if ownPlayer {
+            SocketIOManager.sharedInstance.sendShoot(gameScene.opponent, pos: CGPoint(x: bullet.position.x/scalerX, y: bullet.position.y/scalerY), vel: CGVector(dx: bullet.body.velocity.dx/scalerX, dy: bullet.body.velocity.dy/scalerY))
+        }
         gameScene.addChild(bullet)
         
+    }
+    
+    func shoot(pos: CGPoint, vel: CGVector) {
+        let bullet = Bullet()
+        bullet.setPosition(x: pos.x, y: pos.y)
+        bullet.setVelocity(dx: vel.dx, dy: vel.dy)
+        gameScene.addChild(bullet)
     }
 }
 
@@ -165,5 +157,16 @@ class Bullet: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension SKSpriteNode {
+    func setPosition(x: CGFloat, y: CGFloat) {
+        position.x = x * scalerX
+        position.y = y * scalerY
+    }
+    
+    func setVelocity(dx: CGFloat, dy: CGFloat) {
+        self.physicsBody?.velocity = CGVector(dx: dx * scalerX, dy: dy * scalerY)
     }
 }

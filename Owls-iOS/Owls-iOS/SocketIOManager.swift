@@ -49,8 +49,9 @@ class SocketIOManager: NSObject {
         socket.emit("pause", opponentName, pauseOption)
     }
     
-    func sendShoot(_ opponentName: String) {
-        socket.emit("shoot", opponentName)
+    func sendShoot(_ opponentName: String, pos: CGPoint, vel: CGVector) {
+        let bulletInfo = [pos.x, pos.y, vel.dx, vel.dy]
+        socket.emit("shoot", opponentName, bulletInfo, Date.timeIntervalSinceReferenceDate)
     }
     
     func sendMove(_ opponentName: String, position: CGPoint, velocity: CGVector) {
