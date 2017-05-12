@@ -222,24 +222,65 @@ class Wall: SKSpriteNode {
 }
 
 class DPadView: UIView {
-    var arrows: [UIView]!
-
+    var scene: GameScene!
+    @IBOutlet weak var arrowUp: UIImageView!
+    @IBOutlet weak var arrowRight: UIImageView!
+    @IBOutlet weak var arrowDown: UIImageView!
+    @IBOutlet weak var arrowLeft: UIImageView!
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for arrow: UIView in arrows {
-            for touch: UITouch in touches {
-                if arrow.point(inside: touch.location(in: self), with: event) {
-                    print(arrow.tag)
-                }
-            }
-        }
+        activateMove(touches, event: event)
+        
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        scene.stop()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("Touch!")
+        activateMove(touches, event: event)
     }
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         return frame.contains(point)
+    }
+    func activateMove(_ touches: Set<UITouch>, event: UIEvent?) {
+        for touch: UITouch in touches {
+            let locationPoint = touch.location(in: self)
+            let specificView = hitTest(locationPoint, with: event)
+            print(touch.location(in: self))
+            if inUpArrow(locationPoint) {
+                print("Up...")
+                scene.moveUp()
+            } else if inRightArrow(locationPoint) {
+                print("Right...")
+                scene.moveRight()
+            } else if inDownArrow(locationPoint) {
+                print("Down...")
+                scene.moveDown()
+            }else if inLeftArrow(locationPoint) {
+                print("Left...")
+                scene.moveLeft()
+            }
+            
+        }
+    }
+    
+    func inUpArrow(_ point: CGPoint) -> Bool {
+        return point.x > frame.maxX*0.3 && point.x < frame.maxX * 0.7 && point.y < frame.midY
+    }
+    func inDownArrow(_ point: CGPoint) -> Bool {
+        return point.x > frame.maxX*0.3 && point.x < frame.maxX * 0.7 && point.y > frame.midY
+    }
+    func inLeftArrow(_ point: CGPoint) -> Bool{
+        return point.y > frame.maxY*0.3 && point.y < frame.maxX * 0.7 && point.x < frame.midX
+    }
+    func inRightArrow(_ point: CGPoint) -> Bool{
+        return point.y > frame.maxY*0.3 && point.y < frame.maxX * 0.7 && point.x > frame.midX
+    }
+    func inSubview(_ pointInSuperview: CGPoint, _ subview: UIView) -> Bool{
+        let pointInSubview: CGPoint = subview.convert(pointInSuperview, from: self)
+        if subview.frame.contains(pointInSubview) {
+            print("We have a winner!")
+            return true
+        }
+        return false
     }
 }

@@ -11,10 +11,6 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
-    @IBOutlet weak var upButton: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
-    @IBOutlet weak var downButton: UIButton!
-    @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var fireButton: UIButton!
     @IBOutlet weak var controlView: UIView!
     @IBOutlet weak var pauseView: UIView!
@@ -28,32 +24,32 @@ class GameViewController: UIViewController {
     var timer = Timer()
     var fireTimer: Timer!
     
-    @IBAction func buttonDown(sender: UIButton) {
-        holdingMove = true
-        switch sender {
-        case upButton:
-            print("Up")
-            moveUp()
-            break
-        case downButton:
-            print("Down")
-            moveDown()
-            break
-        case rightButton:
-            print("Right")
-            moveRight()
-            break
-        case leftButton:
-            print("Left")
-            moveLeft()
-            break
-        default:
-            print("Unknown Button, will crash.")
-            break
-        }
-        timer.invalidate()
-        //timer = Timer.scheduledTimer(timeInterval: timeBetweenMoves, target: self, selector: runFunc, userInfo: nil, repeats: true)
-    }
+//    @IBAction func buttonDown(sender: UIButton) {
+//        holdingMove = true
+//        switch sender {
+//        case upButton:
+//            print("Up")
+//            moveUp()
+//            break
+//        case downButton:
+//            print("Down")
+//            moveDown()
+//            break
+//        case rightButton:
+//            print("Right")
+//            moveRight()
+//            break
+//        case leftButton:
+//            print("Left")
+//            moveLeft()
+//            break
+//        default:
+//            print("Unknown Button, will crash.")
+//            break
+//        }
+//        timer.invalidate()
+//        //timer = Timer.scheduledTimer(timeInterval: timeBetweenMoves, target: self, selector: runFunc, userInfo: nil, repeats: true)
+//    }
     
     @IBAction func fireButtonDown(sender: UIButton) {
         fire()
@@ -114,7 +110,7 @@ class GameViewController: UIViewController {
         skView.presentScene(gameScene)
         skView.showsFPS = true
         skView.showsNodeCount = true
-        //controlView.arrows = [upButton, rightButton, downButton, leftButton]
+        dPadView.scene = gameScene
     }
 
     override var shouldAutorotate: Bool {

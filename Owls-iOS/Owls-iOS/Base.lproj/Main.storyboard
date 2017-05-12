@@ -88,94 +88,44 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="csf-yZ-d3V" userLabel="DPadView" customClass="DPadView" customModule="Owls_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="133.5" height="133.5"/>
                                         <subviews>
-                                            <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkl-2f-3AD" userLabel="DownView">
-                                                <rect key="frame" x="46" y="67" width="40.5" height="66.5"/>
-                                                <subviews>
-                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rhM-Ke-iAc">
-                                                        <rect key="frame" x="0.0" y="-0.5" width="40.5" height="67"/>
-                                                        <state key="normal" image="ArrowDown"/>
-                                                        <connections>
-                                                            <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDragEnter" id="Xqg-lS-DLf"/>
-                                                            <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDown" id="xtE-3i-WJH"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchDragExit" id="KOV-TE-94F"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="n0n-gE-HTB"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="yFm-h0-ymQ"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="rhM-Ke-iAc" firstAttribute="top" secondItem="jkl-2f-3AD" secondAttribute="top" id="CVJ-tJ-9po"/>
-                                                    <constraint firstAttribute="bottom" secondItem="rhM-Ke-iAc" secondAttribute="bottom" id="Fml-yh-g0I"/>
-                                                    <constraint firstItem="rhM-Ke-iAc" firstAttribute="leading" secondItem="jkl-2f-3AD" secondAttribute="leading" id="Pn7-hA-eQ7"/>
-                                                    <constraint firstItem="rhM-Ke-iAc" firstAttribute="trailing" secondItem="jkl-2f-3AD" secondAttribute="trailing" id="cnC-fz-6Hk"/>
-                                                </constraints>
-                                            </view>
-                                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyJ-Gs-0hm" userLabel="UpView">
-                                                <rect key="frame" x="46" y="0.5" width="40.5" height="66.5"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kw-CB-Kas">
-                                                        <rect key="frame" x="0.0" y="0.0" width="40.5" height="66.5"/>
-                                                        <state key="normal" image="ArrowUp"/>
-                                                        <connections>
-                                                            <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDown" id="8gK-Wb-Vv9"/>
-                                                            <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDragEnter" id="Lbx-vE-ECa"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchDragOutside" id="1Bi-4D-QCH"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="4jf-Ka-Mpz"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="bfe-mK-jg3"/>
-                                                            <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchDragExit" id="tEI-eO-XyU"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="1Kw-CB-Kas" secondAttribute="bottom" id="9sn-jR-RVY"/>
-                                                    <constraint firstItem="1Kw-CB-Kas" firstAttribute="leading" secondItem="SyJ-Gs-0hm" secondAttribute="leading" id="cnH-SS-PSQ"/>
-                                                    <constraint firstItem="1Kw-CB-Kas" firstAttribute="top" secondItem="SyJ-Gs-0hm" secondAttribute="top" id="nLn-W1-tWE"/>
-                                                    <constraint firstAttribute="trailing" secondItem="1Kw-CB-Kas" secondAttribute="trailing" id="zKl-ZF-6Nd"/>
-                                                </constraints>
-                                            </view>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BSk-hU-P1f">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowUp" translatesAutoresizingMaskIntoConstraints="NO" id="BR3-Hw-6Jz">
+                                                <rect key="frame" x="46.5" y="0.0" width="40.5" height="66.5"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowRight" translatesAutoresizingMaskIntoConstraints="NO" id="tRx-su-edx">
                                                 <rect key="frame" x="67" y="46.5" width="66.5" height="40.5"/>
-                                                <state key="normal" image="ArrowRight"/>
-                                                <connections>
-                                                    <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDown" id="ape-R9-AF7"/>
-                                                    <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDragEnter" id="zaJ-Oo-V8B"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="9t2-kx-Gnl"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="KVs-dY-uEX"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchDragOutside" id="kxV-Nk-F48"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchDragExit" id="z1j-b3-iqF"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRs-na-kTi">
-                                                <rect key="frame" x="0.5" y="46.5" width="66.5" height="40.5"/>
-                                                <state key="normal" image="ArrowLeft"/>
-                                                <connections>
-                                                    <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDown" id="RsX-Jf-PR2"/>
-                                                    <action selector="buttonDownWithSender:" destination="BV1-FR-VrT" eventType="touchDragEnter" id="iIb-3t-yoU"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="JF9-nl-dmG"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchUpOutside" id="dQs-bl-UEU"/>
-                                                    <action selector="buttonUpWithSender:" destination="BV1-FR-VrT" eventType="touchDragExit" id="vJC-d1-zor"/>
-                                                </connections>
-                                            </button>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowDown" translatesAutoresizingMaskIntoConstraints="NO" id="OYd-hm-BaM">
+                                                <rect key="frame" x="46.5" y="67" width="40.5" height="66.5"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Pik-GL-0IO">
+                                                <rect key="frame" x="0.0" y="46.5" width="67" height="40.5"/>
+                                            </imageView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="LRs-na-kTi" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.5" id="8WB-Mx-KYQ"/>
+                                            <constraint firstItem="tRx-su-edx" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.5" id="DdQ-Bz-MrG"/>
+                                            <constraint firstItem="BR3-Hw-6Jz" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="bottom" multiplier="0.25" id="KDB-1U-uof"/>
+                                            <constraint firstItem="OYd-hm-BaM" firstAttribute="centerX" secondItem="csf-yZ-d3V" secondAttribute="centerX" id="LVf-5z-kgf"/>
                                             <constraint firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="height" id="M4v-fv-YGe"/>
-                                            <constraint firstItem="SyJ-Gs-0hm" firstAttribute="bottom" secondItem="csf-yZ-d3V" secondAttribute="bottom" multiplier="0.5" id="M8g-mX-FWX"/>
-                                            <constraint firstItem="BSk-hU-P1f" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="centerY" id="QAJ-kG-zzt"/>
-                                            <constraint firstItem="SyJ-Gs-0hm" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.5" id="QAy-XM-Fm4"/>
-                                            <constraint firstItem="jkl-2f-3AD" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.3" id="RMN-wV-jID"/>
-                                            <constraint firstItem="BSk-hU-P1f" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.5" id="U3b-iK-Dgn"/>
-                                            <constraint firstItem="LRs-na-kTi" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="centerY" id="U7L-IU-UCw"/>
-                                            <constraint firstItem="SyJ-Gs-0hm" firstAttribute="centerX" secondItem="csf-yZ-d3V" secondAttribute="centerX" id="Ukw-8r-FPo"/>
-                                            <constraint firstItem="SyJ-Gs-0hm" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.3" id="cwN-4H-cS0"/>
-                                            <constraint firstItem="BSk-hU-P1f" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.3" id="gdD-Th-wBo"/>
-                                            <constraint firstItem="LRs-na-kTi" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.3" id="ilS-Vg-hiH"/>
-                                            <constraint firstItem="jkl-2f-3AD" firstAttribute="centerX" secondItem="csf-yZ-d3V" secondAttribute="centerX" id="l7e-23-pMJ"/>
-                                            <constraint firstItem="BSk-hU-P1f" firstAttribute="leading" secondItem="csf-yZ-d3V" secondAttribute="centerX" id="s0H-hQ-iPf"/>
-                                            <constraint firstItem="jkl-2f-3AD" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.5" id="ufy-78-yRa"/>
-                                            <constraint firstItem="jkl-2f-3AD" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="bottom" multiplier="0.75" id="vMM-w3-OQk"/>
-                                            <constraint firstItem="LRs-na-kTi" firstAttribute="trailing" secondItem="csf-yZ-d3V" secondAttribute="centerX" id="xmN-aB-vav"/>
+                                            <constraint firstItem="BR3-Hw-6Jz" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.3" id="N8F-Sl-L2E"/>
+                                            <constraint firstItem="tRx-su-edx" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="centerY" id="TTK-ik-yJy"/>
+                                            <constraint firstItem="BR3-Hw-6Jz" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.5" id="TWh-Bw-0zm"/>
+                                            <constraint firstItem="Pik-GL-0IO" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.3" id="ZrG-4b-yY0"/>
+                                            <constraint firstItem="Pik-GL-0IO" firstAttribute="centerX" secondItem="csf-yZ-d3V" secondAttribute="trailing" multiplier="0.25" id="dyu-GT-0Ow"/>
+                                            <constraint firstItem="Pik-GL-0IO" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.5" id="eiv-aM-0YA"/>
+                                            <constraint firstItem="OYd-hm-BaM" firstAttribute="width" secondItem="csf-yZ-d3V" secondAttribute="width" multiplier="0.3" id="fIR-hj-GWX"/>
+                                            <constraint firstItem="Pik-GL-0IO" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="centerY" id="k9K-ME-ef5"/>
+                                            <constraint firstItem="OYd-hm-BaM" firstAttribute="centerY" secondItem="csf-yZ-d3V" secondAttribute="bottom" multiplier="0.75" id="mQf-n2-0Gs"/>
+                                            <constraint firstItem="OYd-hm-BaM" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.5" id="o9z-jJ-XQe"/>
+                                            <constraint firstItem="tRx-su-edx" firstAttribute="height" secondItem="csf-yZ-d3V" secondAttribute="height" multiplier="0.3" id="oCb-pK-WnU"/>
+                                            <constraint firstItem="tRx-su-edx" firstAttribute="centerX" secondItem="csf-yZ-d3V" secondAttribute="trailing" multiplier="0.75" id="rDM-FA-rHR"/>
+                                            <constraint firstItem="BR3-Hw-6Jz" firstAttribute="centerX" secondItem="csf-yZ-d3V" secondAttribute="centerX" id="w6G-lR-RIl"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="arrowDown" destination="OYd-hm-BaM" id="Wh8-zs-R54"/>
+                                            <outlet property="arrowLeft" destination="Pik-GL-0IO" id="bPJ-qU-2rU"/>
+                                            <outlet property="arrowRight" destination="tRx-su-edx" id="SHJ-6e-8OC"/>
+                                            <outlet property="arrowUp" destination="BR3-Hw-6Jz" id="uXh-xd-kRR"/>
+                                        </connections>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZkJ-Sd-4lK">
                                         <rect key="frame" x="269" y="82" width="50" height="50"/>
@@ -237,14 +187,11 @@
                     </view>
                     <connections>
                         <outlet property="controlView" destination="1iA-rN-gVf" id="5PF-E5-Uen"/>
+                        <outlet property="dPadView" destination="csf-yZ-d3V" id="zhS-KE-gHJ"/>
                         <outlet property="dimmer" destination="scT-an-etO" id="3Vg-lc-vye"/>
-                        <outlet property="downButton" destination="rhM-Ke-iAc" id="M7G-rN-hJx"/>
                         <outlet property="fireButton" destination="kye-cl-rwc" id="2JR-zt-KsC"/>
-                        <outlet property="leftButton" destination="LRs-na-kTi" id="jw3-oy-CSB"/>
                         <outlet property="pauseView" destination="J3i-bY-qed" id="wuj-d5-D62"/>
-                        <outlet property="rightButton" destination="BSk-hU-P1f" id="dKd-ns-fma"/>
                         <outlet property="skView" destination="kP0-3k-CQO" id="W07-lk-BRK"/>
-                        <outlet property="upButton" destination="1Kw-CB-Kas" id="5Im-Jb-Jjm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
