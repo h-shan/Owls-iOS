@@ -147,7 +147,7 @@
 				TargetAttributes = {
 					89F1C6D41EBBC9250079D459 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = D2ZMJ8S8D5;
+						DevelopmentTeam = TTP33C342C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -369,8 +369,9 @@
 			baseConfigurationReference = 3915A2F8EEDACEA1BA71CFEB /* Pods-Owls-iOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = D2ZMJ8S8D5;
+				DEVELOPMENT_TEAM = TTP33C342C;
 				INFOPLIST_FILE = "Owls-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.howard.Owls-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -383,8 +384,9 @@
 			baseConfigurationReference = 112D6C723D243E9F6D47BADC /* Pods-Owls-iOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = D2ZMJ8S8D5;
+				DEVELOPMENT_TEAM = TTP33C342C;
 				INFOPLIST_FILE = "Owls-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.howard.Owls-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";

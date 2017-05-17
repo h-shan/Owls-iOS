@@ -15,7 +15,7 @@ enum Direction {
 class Player: SKSpriteNode {
     var currentX:CGFloat = 50
     var currentY:CGFloat = 90
-    var dir: Direction = .NONE
+    var dir: Direction = .UP
     var gameScene: GameScene!
     var body: SKPhysicsBody!
     var shootVelocity: CGFloat = 300
@@ -30,7 +30,7 @@ class Player: SKSpriteNode {
         print(self.size)
         gameScene = scene
         self.ownPlayer = ownPlayer
-        self.zPosition = 3
+        self.zPosition = 0
         self.physicsBody = SKPhysicsBody(circleOfRadius: size.width/2)
         physicsBody?.friction = 0
         physicsBody?.linearDamping = 0
@@ -39,6 +39,10 @@ class Player: SKSpriteNode {
         body.collisionBitMask = 1
         body.categoryBitMask = 1
         body.contactTestBitMask = 1
+        if !ownPlayer {
+            self.zRotation = CGFloat(Double.pi)
+        }
+        self.name = "notwall"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,13 +51,14 @@ class Player: SKSpriteNode {
     
     func reset() {
         lives = startLives
+        zPosition = 0
     }
     
     func moveUp() {
         self.dir = Direction.UP
         self.setVelocity(dx: 0, dy: velocity)
         self.zRotation = 0
-        if ownPlayer {
+        if ownPlayer && !gameScene.gameVC.testing{
             sendMove()
         }
     }
@@ -62,7 +67,7 @@ class Player: SKSpriteNode {
         self.dir = Direction.DOWN
         self.setVelocity(dx: 0, dy: -velocity)
         self.zRotation = CGFloat(Double.pi)
-        if ownPlayer {
+        if ownPlayer && !gameScene.gameVC.testing {
             sendMove()
         }
     }
@@ -71,7 +76,7 @@ class Player: SKSpriteNode {
         self.dir = Direction.LEFT
         self.setVelocity(dx: -velocity, dy: 0)
         self.zRotation = CGFloat(Double.pi/2.0)
-        if ownPlayer {
+        if ownPlayer && !gameScene.gameVC.testing {
             sendMove()
         }
     }
@@ -80,7 +85,7 @@ class Player: SKSpriteNode {
         self.dir = Direction.RIGHT
         self.setVelocity(dx: velocity, dy: 0)
         self.zRotation = CGFloat(Double.pi*3.0/2.0)
-        if ownPlayer {
+        if ownPlayer && !gameScene.gameVC.testing {
             sendMove()
         }
     }
@@ -88,18 +93,19 @@ class Player: SKSpriteNode {
     func stop() {
         //self.dir = Direction.NONE
         self.body.velocity = CGVector(dx: 0, dy: 0)
-        if ownPlayer {
+        if ownPlayer && !gameScene.gameVC.testing {
             sendMove()
         }
     }
     func sendMove() {
         SocketIOManager.sharedInstance.sendMove(gameScene.opponent, position: CGPoint(x: self.position.x / scalerX, y: self.position.y / scalerY), velocity: CGVector(dx: self.body.velocity.dx / scalerX, dy: self.body.velocity.dy / scalerY))
     }
+    
     func shoot() {
         
         let bullet = Bullet()
-        let horizBuffer = 10 * scalerX
-        let vertiBuffer = 10 * scalerY
+        let horizBuffer: CGFloat = scalerX!
+        let vertiBuffer: CGFloat = scalerY!
         
         switch dir {
         case .UP:
@@ -126,10 +132,10 @@ class Player: SKSpriteNode {
             print("No shoot direction")
             break
         }
-        if ownPlayer {
+        if ownPlayer && !gameScene.gameVC.testing {
             SocketIOManager.sharedInstance.sendShoot(gameScene.opponent, pos: CGPoint(x: bullet.position.x/scalerX, y: bullet.position.y/scalerY), vel: CGVector(dx: bullet.body.velocity.dx/scalerX, dy: bullet.body.velocity.dy/scalerY))
         }
-        gameScene.addChild(bullet)
+        gameScene.addNode(bullet)
         
     }
     
@@ -137,7 +143,30 @@ class Player: SKSpriteNode {
         let bullet = Bullet()
         bullet.setPosition(x: pos.x, y: pos.y)
         bullet.setVelocity(dx: vel.dx, dy: vel.dy)
-        gameScene.addChild(bullet)
+        gameScene.addNode(bullet)
+    }
+    
+    func gotHit() {
+        lives -= 1
+        print("Lives left: \(lives)")
+        if lives <= 0 {
+            die()
+        }
+        if ownPlayer && !gameScene.gameVC.testing{
+            SocketIOManager.sharedInstance.sendGotHit(gameScene.opponent)
+        }
+    }
+    
+    func die() {
+        if ownPlayer {
+            SocketIOManager.sharedInstance.sendDead(gameScene.opponent)
+            gameScene.gameVC.resultLabel.text = "LOSS"
+        } else {
+            gameScene.gameVC.resultLabel.text = "VICTORY!"
+        }
+        gameScene.removeNode(self)
+        gameScene.deadOwls.append(self)
+        gameScene.gameVC.resultView.isHidden = false
     }
 }
 
@@ -153,6 +182,7 @@ class Bullet: SKSpriteNode {
         body.contactTestBitMask = 1
         body.categoryBitMask = 0
         self.zPosition = 3
+        self.name = "notwall"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -168,5 +198,9 @@ extension SKSpriteNode {
     
     func setVelocity(dx: CGFloat, dy: CGFloat) {
         self.physicsBody?.velocity = CGVector(dx: dx * scalerX, dy: dy * scalerY)
+    }
+    
+    func distance(to point: CGPoint) -> CGFloat {
+        return sqrt((point.x - position.x) * (point.x - position.x) + (point.y - position.y) * (point.y - position.y))
     }
 }

@@ -58,6 +58,13 @@ class SocketIOManager: NSObject {
         let moveInfo = [position.x, position.y, velocity.dx, velocity.dy]
         socket.emit("move", opponentName, moveInfo, Date.timeIntervalSinceReferenceDate)
     }
+    
+    func sendGotHit(_ opponentName: String) {
+        socket.emit("gotHit", opponentName)
+    }
+    func sendDead(_ opponentName: String) {
+        socket.emit("dead", opponentName)
+    }
 }
 
 extension CGFloat: SocketData {}

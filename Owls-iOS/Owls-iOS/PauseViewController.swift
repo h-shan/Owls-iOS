@@ -13,16 +13,21 @@ class PauseViewController: UIViewController {
     var scene: GameScene!
     var parentVC: GameViewController!
     
-    @IBAction func resume() {
+    @IBAction func resume(_ sender: AnyObject) {
+        print("resume")
         scene.physicsWorld.speed = 1
         scene.isPaused = false
         UIView.animate(withDuration: 0.2,animations:{
             self.parentVC.dimmer?.alpha = 0
         })
         parentVC.pauseView.isHidden = true
+        if sender is UIButton {
+            SocketIOManager.sharedInstance.sendPause(scene.opponent, pauseOption: "resume")
+        }
     }
     
-    @IBAction func restart() {
+    @IBAction func restart(_ sender: AnyObject) {
+        print("restart")
         scene.physicsWorld.speed = 1
         scene.isPaused = false
         UIView.animate(withDuration: 0.2,animations:{
@@ -30,9 +35,16 @@ class PauseViewController: UIViewController {
         })
         parentVC.pauseView.isHidden = true
         scene.restart()
+        if sender is UIButton {
+            SocketIOManager.sharedInstance.sendPause(scene.opponent, pauseOption: "restart")
+        }
     }
     
-    @IBAction func quit() {
+    @IBAction func quit(_ sender: AnyObject) {
+        print("quit")
         navigationController!.popViewController(animated: true)
+        if sender is UIButton {
+            SocketIOManager.sharedInstance.sendPause(scene.opponent, pauseOption: "quit")
+        }
     }
 }

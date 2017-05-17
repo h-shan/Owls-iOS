@@ -19,4 +19,8 @@ class TitleViewController: UIViewController {
         scalerX = screenWidth/1000
         scalerY = screenHeight/1800
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        SocketIOManager.sharedInstance.establishConnection()
+    }
 }

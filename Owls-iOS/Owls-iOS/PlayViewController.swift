@@ -57,11 +57,16 @@ class PlayViewController: UIViewController, UITableViewDelegate, UITableViewData
         SearchOnline.isUserInteractionEnabled = true
         SearchOnline.alpha = 1
         inviteView.isHidden = true
+        movedToScene = false
         SocketIOManager.sharedInstance.establishConnection()
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "game" {
+            let gameVC = segue.destination as! GameViewController
+            gameVC.testing = true
+        }
     }
     
     // MARK: IBActions
@@ -85,7 +90,9 @@ class PlayViewController: UIViewController, UITableViewDelegate, UITableViewData
         sentData = true
         InviteToGame.alpha = 0.5
         InviteToGame.isUserInteractionEnabled = false
-        gameTableView.deselectRow(at: gameTableView.indexPathForSelectedRow!, animated: false)
+        if let row = gameTableView.indexPathForSelectedRow {
+            gameTableView.deselectRow(at: row, animated: false)
+        }
         SocketIOManager.sharedInstance.inviteToGame(username, opponentName: opponent)
     }
     
@@ -200,18 +207,65 @@ extension PlayViewController {
             } else {
                 self.scene.owl2.stop()
             }
-            
-            
-            //self.scene.owl2.setVelocity(dx: vx, dy: -vy)
         }
-        
+        var successful = 1
+        var blocked = 1
         SocketIOManager.sharedInstance.socket.on("shootUpdate") { (opp, ack) in
             let bulletInfo = opp[0] as! [CGFloat]
             let sentTime = opp[1] as! Double
             let timeElapsed = CGFloat(Date.timeIntervalSinceReferenceDate - sentTime)
             let vel = CGVector(dx: bulletInfo[2], dy: -bulletInfo[3])
-            let pos = CGPoint(x: bulletInfo[0] + vel.dx * timeElapsed, y: 1260 - bulletInfo[1] + vel.dy * timeElapsed)
-            self.scene.owl2.shoot(pos: pos, vel: vel)
+            for i in 0..<Int(timeElapsed*20) {
+                let pt = CGPoint(x: bulletInfo[0] + vel.dx * CGFloat(i)/20, y: self.scene.height - (bulletInfo[1] - vel.dy * CGFloat(i)/20))
+                print(scalePt(pt))
+                let nodes = self.scene.nodes(at: scalePt(pt))
+                for node in nodes {
+                    print(type(of: node))
+                    if node is Wall {
+                        print("blocked \(blocked)")
+                        blocked += 1
+                        return
+                    }
+                    if let player = node as? Player {
+                        if player == self.scene.owl {
+                            player.lives -= 1
+                            return
+                        }
+                    }
+                }
+            }
+            print("successful \(successful)")
+            successful += 1
+            self.scene.owl2.shoot(pos: CGPoint(x: bulletInfo[0] /*+ vel.dx * timeElapsed*/, y: 1260 - bulletInfo[1]/* + vel.dy * timeElapsed*/), vel: vel)
+        }
+        
+        SocketIOManager.sharedInstance.socket.on("hitUpdate") { (opp, ack) in
+            self.scene.owl2.gotHit()
+        }
+        
+        SocketIOManager.sharedInstance.socket.on("pauseUpdate") { (opp, ack) in
+            let pauseOption = opp[0] as! String
+            switch pauseOption {
+            case "pause":
+                self.scene.gameVC.pauseClicked(NSObject())
+                break
+            case "resume":
+                self.scene.gameVC.pauseVC.resume(NSObject())
+                break
+            case "restart":
+                self.scene.gameVC.pauseVC.restart(NSObject())
+                break
+            case "quit":
+                self.scene.gameVC.pauseVC.quit(NSObject())
+                break
+            default:
+                break
+            }
+        }
+        
+        SocketIOManager.sharedInstance.socket.on("deadUpdate") { (opp, ack) in
+            print("dead update")
+            self.scene.owl2.die()
         }
     }
 }
